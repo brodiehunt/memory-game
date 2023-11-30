@@ -1,42 +1,66 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+
+
+button {
+    font-family: 'Atkinson Hyperlegible', sans-serif;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* Button styles */
+.btn {
+    transition: 0.2s ease-in all;
+    color: var(--text-lightest);
+    border: none;
+    outline: none;
+    cursor: pointer;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Primary btn */
+.primary {
+    background-color: var(--primary-col);
+}
+.primary:hover {
+    background-color: var(--primary-hover);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* Secondary btn */
+.secondary {
+    background-color: var(--idle-col)
+}
+.secondary:hover {
+    background-color: var(--idle-hover);
 }
 
-.card {
-  padding: 2em;
+.active {
+    background-color: var(--active-col);
 }
 
-.read-the-docs {
-  color: #888;
+.btn-menu {
+    width: 100%;
+    padding: 0.62rem;
+    font-size: var(--font-sz-400);
+    border-radius: var(--br-L);
+}
+
+.btn-lrg {
+    padding: 0.75rem;
+    font-size: var(--font-sz-500);
+    border-radius: var(--br-L);
+}
+
+@media only screen and (min-width: 768px) {
+    .btn-menu {
+        padding: 0.69rem;
+        font-size: var(--font-sz-800);
+
+    }
+
+    .btn-lrg {
+        padding: 1rem;
+        font-size: var(--font-sz-900);
+        border-radius: var(--br-XL);
+    }
+
+}
+
+@media only screen and (min-width: 1444px) {
+
 }
