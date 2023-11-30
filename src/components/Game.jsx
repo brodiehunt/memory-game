@@ -35,6 +35,8 @@ const GameContainer = styled.div`
 export default function Game({numOfPlayers, handleNewGame}) {
     const [players, setPlayers] = useState([]);
     const [timeLapsed, setTimeLapsed] = useState(0);
+    const [menuOpen, setMenuOpen] = useState(false);
+
     // console.log(timeLapsed)
     useEffect(() => {
         const initializePlayers = (numPlayers) => {
@@ -51,14 +53,20 @@ export default function Game({numOfPlayers, handleNewGame}) {
     }, [numOfPlayers]);
 
     useEffect(() => {
-        console.log('use effect');
-        const interval = setInterval(() => {
-            console.log('time, ');
-            setTimeLapsed(prevTime => prevTime + 1);
-        }, 1000);
+        
+        let interval;
+        if (!menuOpen) {
+            interval = setInterval(() => {
+                setTimeLapsed(prevTime => prevTime + 1);
+            }, 1000);
+        }
 
-        return () => clearTimeout(interval);
-    }, [])
+        return () => clearInterval(interval);
+    }, [menuOpen])
+
+    function handleToggleMenu() {
+        setMenuOpen(!menuOpen);
+    }
 
     function formatTime(time) {
         const mins = Math.floor(time / 60);
@@ -79,7 +87,7 @@ export default function Game({numOfPlayers, handleNewGame}) {
     
     return (
         <GameContainer $numPlayers={numOfPlayers > 1 ? numOfPlayers : 2}>
-            <Nav handleNewGame={handleNewGame}/>
+            <Nav menuOpen={menuOpen} handleToggleMenu={handleToggleMenu} handleNewGame={handleNewGame}/>
             <div className="players-info-container">
                 {numOfPlayers > 1 && playersInfoDivs}
                 {numOfPlayers === 1 && 

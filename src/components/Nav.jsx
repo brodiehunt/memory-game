@@ -56,12 +56,8 @@ const NavEl = styled.nav`
     }
 `;
 
-export default function Nav({handleNewGame}) {
-    const [menuOpen, setMenuOpen] = useState(false);
-
-    function handleToggleMenu() {
-        setMenuOpen(!menuOpen);
-    }
+export default function Nav({menuOpen, handleNewGame, handleToggleMenu}) {
+    
 
     return (
         <NavEl>
