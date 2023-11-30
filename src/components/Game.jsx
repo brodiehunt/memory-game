@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import Nav from './Nav';
 import Board from './Board';
 import Modal from './Modal';
-import PlayerInfo from './PlayerInfo'
+import PlayersInfo from './PlayersInfo'
+import ResultsMenu from './ResultsMenu';
+import formatTime from '../utility/formatTime';
 
 const GameContainer = styled.div`
     padding: 1.5rem;
@@ -12,6 +14,7 @@ const GameContainer = styled.div`
     width: 100%;
     max-width: 1110px;
     display: flex; 
+    position: relative;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
@@ -36,8 +39,9 @@ export default function Game({numOfPlayers, handleNewGame}) {
     const [players, setPlayers] = useState([]);
     const [timeLapsed, setTimeLapsed] = useState(0);
     const [menuOpen, setMenuOpen] = useState(false);
+    const [gameOver, setGameOver] = useState(false);
 
-    // console.log(timeLapsed)
+    
     useEffect(() => {
         const initializePlayers = (numPlayers) => {
             return Array.from({length: numPlayers}, (_, index) => ({
@@ -55,48 +59,35 @@ export default function Game({numOfPlayers, handleNewGame}) {
     useEffect(() => {
         
         let interval;
-        if (!menuOpen) {
+        if (!menuOpen && !gameOver) {
             interval = setInterval(() => {
                 setTimeLapsed(prevTime => prevTime + 1);
             }, 1000);
         }
 
         return () => clearInterval(interval);
-    }, [menuOpen])
+    }, [menuOpen, gameOver])
 
     function handleToggleMenu() {
         setMenuOpen(!menuOpen);
     }
 
-    function formatTime(time) {
-        const mins = Math.floor(time / 60);
-        let secs = time % 60;
-        if (secs < 10) {
-            secs = '0' + secs;
-        }
-        return `${mins}: ${secs}`;
+    function handleGameOver() {
+        setGameOver(!gameOver);
     }
 
     const time = formatTime(timeLapsed);
 
-    const playersInfoDivs = players.map((item) => {
-        return (
-            <PlayerInfo singlePlayer={false} name={item.name} id={item.id} pairs={item.pairs} turn={item.turn} />
-        )
-    })
+    
     
     return (
         <GameContainer $numPlayers={numOfPlayers > 1 ? numOfPlayers : 2}>
+            <button onClick={handleGameOver}>Stimulate Game over</button>
+            {gameOver && 
+            <ResultsMenu handleNewGame={handleNewGame} players={players} timeLapsed={time} moves="10"/>
+            }
             <Nav menuOpen={menuOpen} handleToggleMenu={handleToggleMenu} handleNewGame={handleNewGame}/>
-            <div className="players-info-container">
-                {numOfPlayers > 1 && playersInfoDivs}
-                {numOfPlayers === 1 && 
-                    <>
-                        <PlayerInfo singlePlayer={true} title="Time" val={time} />
-                        <PlayerInfo singlePlayer={true} title="Moves" val="23" />
-                    </>
-                }
-            </div>
+            <PlayersInfo numOfPlayers={numOfPlayers} players={players} time={time}/>
         </GameContainer>
     )
 }

@@ -25,6 +25,7 @@ const GlobalStyles = createGlobalStyle`
         --br-M: 1.25rem;
         --br-L: 1.625rem;
         --br-XL: 2.185rem;
+        --text-darkest: #152938;
         --text-dark: #304859;
         --text-lighter: #7191A5;
         --text-lightest: #FCFCFC;
