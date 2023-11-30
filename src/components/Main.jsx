@@ -25,6 +25,13 @@ export default function Main() {
         setMenuOpen(!menuOpen);
     }
 
+    function newGame() {
+        setIsNumbers(true);
+        setNumOfPlayers(1);
+        setIsSmallGrid(true);
+        setMenuOpen(true);
+    }
+
 
     return (
         <BodyContainer $background={menuOpen ? 'dark' : 'light'}>
@@ -38,7 +45,12 @@ export default function Main() {
                 handleChangeNumPlayers={handleChangeNumPlayers}
                 handleChangeGrid={handleChangeGrid}/>
                 ) : (
-                <Game/> 
+                <Game
+                    isNumbers={isNumbers}
+                    numOfPlayers={numOfPlayers}
+                    isSmallGrid={isSmallGrid}
+                    handleNewGame={newGame}
+                /> 
             )}
             
             

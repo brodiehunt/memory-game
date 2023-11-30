@@ -46,6 +46,14 @@ button {
     border-radius: var(--br-L);
 }
 
+/* Nav buttons */
+
+.btn-nav {
+    font-size: var(--font-sz-400);
+    padding: 0.62rem 1.16rem;
+    border-radius: var(--br-L);
+}
+
 @media only screen and (min-width: 768px) {
     .btn-menu {
         padding: 0.69rem;
@@ -57,6 +65,11 @@ button {
         padding: 1rem;
         font-size: var(--font-sz-900);
         border-radius: var(--br-XL);
+    }
+
+    .btn-nav {
+        padding: 0.81rem 1.75rem;
+        font-size: var(--font-sz-600);
     }
 
 }
