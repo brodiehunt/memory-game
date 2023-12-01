@@ -35,7 +35,7 @@ const GameContainer = styled.div`
     }
 `;
 
-export default function Game({numOfPlayers, handleNewGame}) {
+export default function Game({numOfPlayers, isNumbers, isGridSmall, handleNewGame}) {
     const [players, setPlayers] = useState([]);
     const [timeLapsed, setTimeLapsed] = useState(0);
     const [menuOpen, setMenuOpen] = useState(false);
@@ -82,11 +82,12 @@ export default function Game({numOfPlayers, handleNewGame}) {
     
     return (
         <GameContainer $numPlayers={numOfPlayers > 1 ? numOfPlayers : 2}>
-            <button onClick={handleGameOver}>Stimulate Game over</button>
+            {/* <button onClick={handleGameOver}>Stimulate Game over</button> */}
             {gameOver && 
             <ResultsMenu handleNewGame={handleNewGame} players={players} timeLapsed={time} moves="10"/>
             }
             <Nav menuOpen={menuOpen} handleToggleMenu={handleToggleMenu} handleNewGame={handleNewGame}/>
+            <Board players={players} isNumbers={isNumbers} isGridSmall={isGridSmall}/>
             <PlayersInfo numOfPlayers={numOfPlayers} players={players} time={time}/>
         </GameContainer>
     )

@@ -1,8 +1,8 @@
 import {useState} from 'react';
 
 
-export default function BoardPiece() {
+export default function BoardPiece({value, state, id}) {
     return (
-        <div>This is the board piece</div>
+        <button key={id}>{value}</button>
     )
 }
