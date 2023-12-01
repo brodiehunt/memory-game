@@ -19,17 +19,6 @@ const BoardContainer = styled.div`
     }
 `;
 
-// Lets button event listeners 
-
-// onClick will recieve the object id
-// will use the object id to update board state
-// depending on whether or not it is first or second go
-// first go - set hidden false active true
-// second go - set hidden false active true -- setTimeout function
-// callback function in setTimeout will compare the two objects (saved in state);
-// if the same - set paired true - set hidden - false - set active false
-// call function to add a pair to the current players pairs object
-
 export default function Board({players, isSmallGrid, isNumbers, changePlayerTurn, handleGameOver}) {
     const [board, setBoard] = useState([]);
     const [numOfPairs, setNumOfPairs] = useState(null);
@@ -75,15 +64,19 @@ export default function Board({players, isSmallGrid, isNumbers, changePlayerTurn
     }
 
     function handlePlayerTurn(index) {
+        updatePieceToActive(index);
+        
         if (!isFirstSelection) {
-            setIsFirstSelection(!isFirstSelection);
-            const isSetPair = isPair(firstSelection, {index, piece: board[index]});
-            updateSelections(firstSelection, {index, piece: board[index]}, isSetPair);
-            changePlayerTurn(isSetPair);
+            setTimeout(() => {
+                setIsFirstSelection(!isFirstSelection);
+                const isSetPair = isPair(firstSelection, {index, piece: board[index]});
+                updateSelections(firstSelection, {index, piece: board[index]}, isSetPair);
+                changePlayerTurn(isSetPair);
+            
+            }, 1000)
         } else {
             setIsFirstSelection(!isFirstSelection);
             setFirstSelection({index, piece: board[index]});
-            updatePieceToActive(index);
         }
         
     }

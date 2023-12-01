@@ -72,7 +72,7 @@ export default function Game({numOfPlayers, isNumbers, isSmallGrid, handleNewGam
     }
 
     function handleGameOver() {
-        setGameOver(!gameOver);
+        setGameOver(true);
     }
 
     const time = formatTime(timeLapsed);
