@@ -30,26 +30,27 @@ const BoardContainer = styled.div`
 // if the same - set paired true - set hidden - false - set active false
 // call function to add a pair to the current players pairs object
 
-export default function Board({players, isSmallGrid, isNumbers, changePlayerTurn}) {
+export default function Board({players, isSmallGrid, isNumbers, changePlayerTurn, handleGameOver}) {
     const [board, setBoard] = useState([]);
+    const [numOfPairs, setNumOfPairs] = useState(null);
+    const [currentPairs, setCurrentPairs] = useState(0);
     const [firstSelection, setFirstSelection] = useState(null);
     const [isFirstSelection, setIsFirstSelection] = useState(true);
     
     useEffect(() => {
         let numOfObjects = isSmallGrid ? 16 : 36;
-        let numOfPairs = numOfObjects / 2;
+        let numberOfPairs = numOfObjects / 2;
 
         const icons = ['ball', 'anchor', 'beaker', 'sun', 'hand', 'bug', 'moon', 'snow', 'music', 'car'];
         const buildBoard = () => {
             const arrOfObjs = [];
             // create object pairs an push into board array
-            for (let i = 0; i < numOfPairs; i++) {
+            for (let i = 0; i < numberOfPairs; i++) {
                 const value = isNumbers ? Math.floor(Math.random() * 99) : icons[i % icons.length];
                 const obj1 = {
                     value,
                     paired: false,
                     active: false,
-                    // hidden: false,
                     id: uuidv4()
                 }
                 const obj2 = {...obj1, id: uuidv4()};
@@ -65,8 +66,13 @@ export default function Board({players, isSmallGrid, isNumbers, changePlayerTurn
         }
         const boardArr = buildBoard();
         setBoard(boardArr);
+        setNumOfPairs(numberOfPairs);
 
     }, [isSmallGrid]);
+
+    if (currentPairs == numOfPairs) {
+        handleGameOver();
+    }
 
     function handlePlayerTurn(index) {
         if (!isFirstSelection) {
@@ -86,6 +92,7 @@ export default function Board({players, isSmallGrid, isNumbers, changePlayerTurn
         console.log('Selection one', selectionOne)
         console.log('Selection two', selectionTwo)
         if (selectionOne.piece.value === selectionTwo.piece.value) {
+            setCurrentPairs(currentPairs + 1)
             return true;
         }
         return false;

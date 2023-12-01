@@ -39,7 +39,7 @@ export default function Game({numOfPlayers, isNumbers, isSmallGrid, handleNewGam
     const [players, setPlayers] = useState([]);
     const [timeLapsed, setTimeLapsed] = useState(0);
     const [menuOpen, setMenuOpen] = useState(false);
-    const [gameOver, setGameOver] = useState(true);
+    const [gameOver, setGameOver] = useState(false);
     
     useEffect(() => {
         const initializePlayers = (numPlayers) => {
@@ -99,7 +99,8 @@ export default function Game({numOfPlayers, isNumbers, isSmallGrid, handleNewGam
             <ResultsMenu handleNewGame={handleNewGame} players={players} timeLapsed={time} moves="10"/>
             }
             <Nav menuOpen={menuOpen} handleToggleMenu={handleToggleMenu} handleNewGame={handleNewGame}/>
-            <Board 
+            <Board
+                handleGameOver={handleGameOver}
                 players={players} 
                 isNumbers={isNumbers} 
                 isSmallGrid={isSmallGrid}
