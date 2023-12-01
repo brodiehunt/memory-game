@@ -21,6 +21,7 @@ const GlobalStyles = createGlobalStyle`
         --font-sz-1000: 2.5rem;
         --font-sz-1100: 2.75rem;
         --font-sz-1200: 3rem;
+        --font-sz-1300: 3.5rem;
         --br-S: 0.625rem;
         --br-M: 1.25rem;
         --br-L: 1.625rem;
@@ -43,6 +44,7 @@ const GlobalStyles = createGlobalStyle`
     }
     button {
         font-family: 'Atkinson Hyperlegible', sans-serif;
+        -webkit-tap-highlight-color: transparent;
     }
 `;
 

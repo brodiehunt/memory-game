@@ -35,12 +35,11 @@ const GameContainer = styled.div`
     }
 `;
 
-export default function Game({numOfPlayers, isNumbers, isGridSmall, handleNewGame}) {
+export default function Game({numOfPlayers, isNumbers, isSmallGrid, handleNewGame}) {
     const [players, setPlayers] = useState([]);
     const [timeLapsed, setTimeLapsed] = useState(0);
     const [menuOpen, setMenuOpen] = useState(false);
-    const [gameOver, setGameOver] = useState(false);
-
+    const [gameOver, setGameOver] = useState(true);
     
     useEffect(() => {
         const initializePlayers = (numPlayers) => {
@@ -78,6 +77,19 @@ export default function Game({numOfPlayers, isNumbers, isGridSmall, handleNewGam
 
     const time = formatTime(timeLapsed);
 
+    function changePlayerTurn(updateScore) {
+        // find current player
+        let newPlayers = [...players];
+        for (let i = 0; i < newPlayers.length; i++) {
+            if (newPlayers[i].turn) {
+                newPlayers[i].turn = false;
+                updateScore && newPlayers[i].pairs++; 
+                newPlayers[(i + 1) % newPlayers.length].turn = true;
+                break;
+            }
+        }
+        setPlayers(newPlayers);
+    }
     
     
     return (
@@ -87,7 +99,12 @@ export default function Game({numOfPlayers, isNumbers, isGridSmall, handleNewGam
             <ResultsMenu handleNewGame={handleNewGame} players={players} timeLapsed={time} moves="10"/>
             }
             <Nav menuOpen={menuOpen} handleToggleMenu={handleToggleMenu} handleNewGame={handleNewGame}/>
-            <Board players={players} isNumbers={isNumbers} isGridSmall={isGridSmall}/>
+            <Board 
+                players={players} 
+                isNumbers={isNumbers} 
+                isSmallGrid={isSmallGrid}
+                changePlayerTurn={changePlayerTurn}
+            />
             <PlayersInfo numOfPlayers={numOfPlayers} players={players} time={time}/>
         </GameContainer>
     )
