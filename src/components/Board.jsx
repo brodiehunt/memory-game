@@ -4,6 +4,7 @@ import BoardPiece from './BoardPiece';
 import styled from 'styled-components';
 
 const BoardContainer = styled.div`
+    position: relative;
     display: grid;
     grid-template-columns: ${({$columns}) => `repeat(${$columns}, 1fr)`};
     grid-template-rows: ${({$columns}) => `repeat(${$columns}, 1fr)`};
@@ -13,19 +14,29 @@ const BoardContainer = styled.div`
     aspect-ratio: 1/1;
     margin: 0 auto;
 
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
     @media (min-width: 768px) {
         grid-gap: ${({$columns}) => $columns == 4 ? '0.77rem' : '0.57rem'};
 
     }
 `;
 
-export default function Board({players, isSmallGrid, isNumbers, changePlayerTurn, handleGameOver}) {
+export default function Board({players, isSmallGrid, isNumbers, changePlayerTurn, handleGameOver, toggleRefreshGame}) {
     const [board, setBoard] = useState([]);
     const [numOfPairs, setNumOfPairs] = useState(null);
     const [currentPairs, setCurrentPairs] = useState(0);
     const [firstSelection, setFirstSelection] = useState(null);
     const [isFirstSelection, setIsFirstSelection] = useState(true);
-    
+    const [isOverlayActive, setIsOverlayActive] = useState(false);
+
+    // Run on first mount and then if the player restarts game
     useEffect(() => {
         let numOfObjects = isSmallGrid ? 16 : 36;
         let numberOfPairs = numOfObjects / 2;
@@ -56,22 +67,31 @@ export default function Board({players, isSmallGrid, isNumbers, changePlayerTurn
         const boardArr = buildBoard();
         setBoard(boardArr);
         setNumOfPairs(numberOfPairs);
+        setCurrentPairs(0);
+        setFirstSelection(null);
+        setIsFirstSelection(true);
+        setIsOverlayActive(false);
+       
+    }, [toggleRefreshGame]);
 
-    }, [isSmallGrid]);
+    useEffect(() => {
+        if (currentPairs === numOfPairs) {
+          handleGameOver();
+        }
+    }, [currentPairs, numOfPairs, handleGameOver]);
 
-    if (currentPairs == numOfPairs) {
-        handleGameOver();
-    }
 
     function handlePlayerTurn(index) {
         updatePieceToActive(index);
         
         if (!isFirstSelection) {
+            setIsOverlayActive(true);
             setTimeout(() => {
                 setIsFirstSelection(!isFirstSelection);
                 const isSetPair = isPair(firstSelection, {index, piece: board[index]});
                 updateSelections(firstSelection, {index, piece: board[index]}, isSetPair);
                 changePlayerTurn(isSetPair);
+                setIsOverlayActive(false);
             
             }, 1000)
         } else {
@@ -82,8 +102,6 @@ export default function Board({players, isSmallGrid, isNumbers, changePlayerTurn
     }
 
     function isPair(selectionOne, selectionTwo) {
-        console.log('Selection one', selectionOne)
-        console.log('Selection two', selectionTwo)
         if (selectionOne.piece.value === selectionTwo.piece.value) {
             setCurrentPairs(currentPairs + 1)
             return true;
@@ -107,7 +125,6 @@ export default function Board({players, isSmallGrid, isNumbers, changePlayerTurn
 
     function updatePieceToActive(index) {
         const newBoard = [...board];
-        console.log(newBoard);
         newBoard[index].active = true;
         setBoard(newBoard);
     }
@@ -128,6 +145,7 @@ export default function Board({players, isSmallGrid, isNumbers, changePlayerTurn
     })
     return (
         <BoardContainer $columns={isSmallGrid ? 4 : 6}>
+            {isOverlayActive && <div className="overlay"></div>}
             {boardPieces}
         </BoardContainer>
     )

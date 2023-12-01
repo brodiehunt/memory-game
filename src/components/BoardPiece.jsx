@@ -74,7 +74,7 @@ export default function BoardPiece({value, active, paired, id, index, isSmallGri
         $paired={paired}
          $active={active} 
          $isSmallGrid={isSmallGrid}
-         onClick={paired ? null : (event) => handleClick()}
+         onClick={(paired || active) ? null : (event) => handleClick()}
          >
             {(paired || active) && (
                 typeof(value) === 'number' ? (

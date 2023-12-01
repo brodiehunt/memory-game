@@ -10,7 +10,7 @@ const PlayersDiv = styled.div`
     
 `
 
-export default function PlayersInfo({numOfPlayers, players, time}) {
+export default function PlayersInfo({numOfPlayers, players, time, moves}) {
 
     const playersInfoDivs = players.map((item) => {
         return (
@@ -24,7 +24,7 @@ export default function PlayersInfo({numOfPlayers, players, time}) {
                 {numOfPlayers === 1 && 
                     <>
                         <PlayerInfo singlePlayer={true} title="Time" val={time} />
-                        <PlayerInfo singlePlayer={true} title="Moves" val="23" />
+                        <PlayerInfo singlePlayer={true} title="Moves" val={moves} />
                     </>
                 }
         </PlayersDiv>

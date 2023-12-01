@@ -111,7 +111,7 @@ const ResultModal = styled.div`
 
 `;
 
-export default function ResultsMenu({players, timeLapsed, moves, handleNewGame}) {
+export default function ResultsMenu({players, timeLapsed, moves, handleNewGame, handleRefreshGame}) {
     let isWin = false;
     let heading;
     let statement;
@@ -175,7 +175,7 @@ export default function ResultsMenu({players, timeLapsed, moves, handleNewGame})
                     {playerDivs}
                 </div>
                 <div className="btns-container">
-                    <Button className="btn primary btn-nav" text="Restart"/>
+                    <Button className="btn primary btn-nav" text="Restart" onClick={handleRefreshGame}/>
                     <Button onClick={handleNewGame} className="btn secondary btn-nav" text="Setup New Game"/>
                 </div>
             </div>

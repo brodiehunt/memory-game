@@ -56,21 +56,21 @@ const NavEl = styled.nav`
     }
 `;
 
-export default function Nav({menuOpen, handleNewGame, handleToggleMenu}) {
+export default function Nav({menuOpen, handleNewGame, handleToggleMenu, handleRefreshGame}) {
     
 
     return (
         <NavEl>
             <h1>memory</h1>
             <div className="nav-buttons">
-                <Button className="btn primary btn-nav" text="Restart"/>
+                <Button className="btn primary btn-nav" text="Restart" onClick={handleRefreshGame}/>
                 <Button className="btn secondary btn-nav" text="New Game" onClick={handleNewGame}/>
             </div>
             <Button className="btn primary btn-nav open-menu" text="Menu" onClick={handleToggleMenu}/>
             {menuOpen && 
                 <div className="menu-modal">
                     <div className="menu">
-                        <Button className="btn primary btn-lrg" text="Restart"/>
+                        <Button className="btn primary btn-lrg" text="Restart" onClick={handleRefreshGame}/>
                         <Button className="btn secondary btn-lrg" text="New Game" onClick={handleNewGame}/>
                         <Button className="btn secondary btn-lrg" text="Resume Game" onClick={handleToggleMenu}/>
                     </div>

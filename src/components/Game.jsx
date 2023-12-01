@@ -40,7 +40,9 @@ export default function Game({numOfPlayers, isNumbers, isSmallGrid, handleNewGam
     const [timeLapsed, setTimeLapsed] = useState(0);
     const [menuOpen, setMenuOpen] = useState(false);
     const [gameOver, setGameOver] = useState(false);
-    
+    const [movesTaken, setMovesTaken] = useState(0);
+    const [toggleRefreshGame, setToggleRefreshGame] = useState(false);
+
     useEffect(() => {
         const initializePlayers = (numPlayers) => {
             return Array.from({length: numPlayers}, (_, index) => ({
@@ -53,7 +55,11 @@ export default function Game({numOfPlayers, isNumbers, isSmallGrid, handleNewGam
 
         const playersArray = initializePlayers(numOfPlayers);
         setPlayers(playersArray);
-    }, [numOfPlayers]);
+        setMenuOpen(false);
+        setMovesTaken(0);
+        setTimeLapsed(0);
+        setGameOver(false);
+    }, [toggleRefreshGame]);
 
     useEffect(() => {
         
@@ -74,10 +80,18 @@ export default function Game({numOfPlayers, isNumbers, isSmallGrid, handleNewGam
     function handleGameOver() {
         setGameOver(true);
     }
+    function increaseMovesTaken() {
+        setMovesTaken(movesTaken + 1);
+    }
+
+    function handleRefreshGame() {
+        setToggleRefreshGame(!toggleRefreshGame);
+    }
 
     const time = formatTime(timeLapsed);
 
     function changePlayerTurn(updateScore) {
+        increaseMovesTaken();
         // find current player
         let newPlayers = [...players];
         for (let i = 0; i < newPlayers.length; i++) {
@@ -94,19 +108,34 @@ export default function Game({numOfPlayers, isNumbers, isSmallGrid, handleNewGam
     
     return (
         <GameContainer $numPlayers={numOfPlayers > 1 ? numOfPlayers : 2}>
-            {/* <button onClick={handleGameOver}>Stimulate Game over</button> */}
             {gameOver && 
-            <ResultsMenu handleNewGame={handleNewGame} players={players} timeLapsed={time} moves="10"/>
+            <ResultsMenu 
+                handleRefreshGame={handleRefreshGame}
+                handleNewGame={handleNewGame} 
+                players={players} 
+                timeLapsed={time}
+                moves={movesTaken}
+            />
             }
-            <Nav menuOpen={menuOpen} handleToggleMenu={handleToggleMenu} handleNewGame={handleNewGame}/>
+            <Nav 
+                menuOpen={menuOpen} 
+                handleToggleMenu={handleToggleMenu} 
+                handleNewGame={handleNewGame} 
+                handleRefreshGame={handleRefreshGame}/>
             <Board
+                toggleRefreshGame={toggleRefreshGame}
                 handleGameOver={handleGameOver}
                 players={players} 
                 isNumbers={isNumbers} 
                 isSmallGrid={isSmallGrid}
                 changePlayerTurn={changePlayerTurn}
             />
-            <PlayersInfo numOfPlayers={numOfPlayers} players={players} time={time}/>
+            <PlayersInfo 
+                numOfPlayers={numOfPlayers} 
+                players={players} 
+                time={time} 
+                moves={movesTaken}
+            />
         </GameContainer>
     )
 }
