@@ -13,6 +13,7 @@ const BoardContainer = styled.div`
     max-width: 500px;
     aspect-ratio: 1/1;
     margin: 0 auto;
+    perspective: 1000px;
 
     .overlay {
         position: absolute;

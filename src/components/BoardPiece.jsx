@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import styled from 'styled-components';
+import styled, {keyframes, css} from 'styled-components';
 import Anchor from '../assets/anchor.svg';
 import Ball from '../assets/ball.svg';
 import Beaker from '../assets/beaker.svg';
@@ -11,6 +11,14 @@ import Music from '../assets/music.svg';
 import Snow from '../assets/snow.svg';
 import Sun from '../assets/sun.svg';
 
+const spin = keyframes`
+    from {
+        transform: rotateY(0);
+    }
+    to {
+        transform: rotateY(360deg);
+    }
+`;
 
 const BoardButton = styled.button`
     width: 100%;
@@ -29,6 +37,10 @@ const BoardButton = styled.button`
     $paired  ? ('var(--idle-col)') : (
         $active ? 'var(--primary-col)' : 'var(--active-col)'
     )};
+    transform-style: preserve-3d;
+    ${({ $active }) => $active && css`
+        animation: ${spin} 0.3s linear;
+    `}
     
     &:hover {
         background-color: ${({$paired, $active}) => 
