@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import styled, {keyframes, css} from 'styled-components';
 import Anchor from '../assets/anchor.svg';
 import Ball from '../assets/ball.svg';

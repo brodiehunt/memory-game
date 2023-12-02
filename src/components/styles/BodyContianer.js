@@ -4,8 +4,8 @@ const BodyContainer = styled.main`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100svh;
     background-color: ${({$background}) => $background === 'dark' ? 'var(--background-col)' : 'var(--text-lightest)'};
 
 `;
