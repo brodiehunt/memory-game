@@ -49,8 +49,12 @@ const ResultModal = styled.div`
         margin-bottom: 1rem;
         padding: 1rem;
         border-radius: 0.3125rem;
-        background-color: ${({$winner}) => $winner ? 'var(--background-col)' : 'var(--neutral)'};
-        color: ${({$winner}) => $winner ? 'var(--text-lightest)' : 'var(--text-lighter)'};
+        background-color: var(--neutral);
+        color: var(--text-lighter);
+    }
+    .container.winner {
+        background-color: var(--background-col);
+        color: var(--text-lightest);
     }
 
     .player {
@@ -59,7 +63,11 @@ const ResultModal = styled.div`
 
     .pairs {
         font-size: var(--font-sz-600);
-        color: ${({$winner}) => $winner ? 'var(--text-lightest)' : 'var(--text-dark)'};
+        color: var(--text-dark);
+    }
+
+    .winner .pairs {
+        color: var(--text-lightest);
     }
 
     .btns-container {
@@ -155,12 +163,12 @@ export default function ResultsMenu({players, timeLapsed, moves, handleNewGame, 
         statement = "Game over! Here are the results..."
         playerDivs = sortedPlayers.map((item, index) => {
             return (
-                <div className="container" key={index} >
+                <div className={item.winner ? 'container winner' : 'container'} key={index} >
                     <div className="player">
                         {item.name}
                         <span className="winner-span">{item.winner ? '(Winner!)' : ''}</span>
                     </div>
-                    <div className="pairs">{`${item.pairs} Pairs`}</div>
+                    <div className='pairs'>{`${item.pairs} Pairs`}</div>
                 </div>
             )
         });

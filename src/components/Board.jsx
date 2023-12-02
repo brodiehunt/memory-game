@@ -21,6 +21,7 @@ const BoardContainer = styled.div`
         left: 0;
         width: 100%;
         height: 100%;
+        z-index: 10;
     }
 
     @media (min-width: 768px) {
