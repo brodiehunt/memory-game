@@ -12,7 +12,7 @@ const PlayerDiv = styled.div`
 
 
     &::before {
-    content: '';
+        content: '';
         display: ${({ $turn }) => ($turn ? 'block' : 'none')};
         width: 0;
         height: 0;

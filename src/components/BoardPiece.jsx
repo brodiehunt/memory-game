@@ -61,8 +61,7 @@ const BoardButton = styled.button`
     }
 `
 
-export default function BoardPiece({value, active, paired, id, index, isSmallGrid, handlePlayerTurn}) {
-    // const [hidden, sethidden] = useState(!paired);
+export default function BoardPiece({value, active, paired, index, isSmallGrid, handlePlayerTurn}) {
     const ICONS = {
         anchor: Anchor,
         ball: Ball,
@@ -76,16 +75,14 @@ export default function BoardPiece({value, active, paired, id, index, isSmallGri
         sun: Sun
     
     }
-    function handleClick() {
-        handlePlayerTurn(index);
-    }
+    
     return (
         <BoardButton 
         // $hidden={hidden} 
         $paired={paired}
          $active={active} 
          $isSmallGrid={isSmallGrid}
-         onClick={(paired || active) ? null : (event) => handleClick()}
+         onClick={(paired || active) ? null : () => handlePlayerTurn(index)}
          >
             {(paired || active) && (
                 typeof(value) === 'number' ? (

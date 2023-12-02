@@ -2,7 +2,6 @@ import {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import Nav from './Nav';
 import Board from './Board';
-import Modal from './Modal';
 import PlayersInfo from './PlayersInfo'
 import ResultsMenu from './ResultsMenu';
 import formatTime from '../utility/formatTime';
@@ -43,6 +42,7 @@ export default function Game({numOfPlayers, isNumbers, isSmallGrid, handleNewGam
     const [movesTaken, setMovesTaken] = useState(0);
     const [toggleRefreshGame, setToggleRefreshGame] = useState(false);
 
+    // Populates gameboard on mount and when user 'refreshes' game
     useEffect(() => {
         const initializePlayers = (numPlayers) => {
             return Array.from({length: numPlayers}, (_, index) => ({
@@ -61,8 +61,8 @@ export default function Game({numOfPlayers, isNumbers, isSmallGrid, handleNewGam
         setGameOver(false);
     }, [toggleRefreshGame]);
 
+    // initialises setInterval - clears set interval on game end or menu open (to stop timer)
     useEffect(() => {
-        
         let interval;
         if (!menuOpen && !gameOver) {
             interval = setInterval(() => {
@@ -88,17 +88,19 @@ export default function Game({numOfPlayers, isNumbers, isSmallGrid, handleNewGam
         setToggleRefreshGame(!toggleRefreshGame);
     }
 
+    // utility function to format time 00:00
     const time = formatTime(timeLapsed);
 
+    // Run on every second click -ie end of player turn. Increases moves, updates player state
     function changePlayerTurn(updateScore) {
         increaseMovesTaken();
-        // find current player
         let newPlayers = [...players];
+        // find current player -> rotate turn - increase pair property if pair found
         for (let i = 0; i < newPlayers.length; i++) {
             if (newPlayers[i].turn) {
                 newPlayers[i].turn = false;
-                updateScore && newPlayers[i].pairs++; 
                 newPlayers[(i + 1) % newPlayers.length].turn = true;
+                updateScore && newPlayers[i].pairs++; 
                 break;
             }
         }

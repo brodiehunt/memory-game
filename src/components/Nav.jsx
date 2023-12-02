@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import Button from './Button';
-import {useState} from 'react';
 
 const NavEl = styled.nav`
     display: flex;
@@ -13,12 +12,10 @@ const NavEl = styled.nav`
         color: var(--background-col);
         font-size: var(--font-sz-700);
     }
-
     .nav-buttons {
         display: none;
         gap: 0.4rem;
     }
-
     .menu-modal {
         position: fixed;
         top: 0;
@@ -31,7 +28,6 @@ const NavEl = styled.nav`
         background: rgba(0,0,0, 0.5);
         z-index: 2;
     }
-
     .menu {
         width: 100%;
         margin: 0 1.5rem;
@@ -47,7 +43,6 @@ const NavEl = styled.nav`
         h1 {
             font-size: var(--font-sz-1000);
         }
-
         .nav-buttons {
             display: flex;
         }
@@ -59,7 +54,6 @@ const NavEl = styled.nav`
 
 export default function Nav({menuOpen, handleNewGame, handleToggleMenu, handleRefreshGame}) {
     
-
     return (
         <NavEl>
             <h1>memory</h1>

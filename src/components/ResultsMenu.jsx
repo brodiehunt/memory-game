@@ -20,27 +20,22 @@ const ResultModal = styled.div`
         padding: 1.5rem;
         background-color: var(--light);
         border-radius: var(--br-S);
-       
     }
-
     h2 {
         text-align: center;
         color: var(--text-darkest);
         font-size: var(--font-sz-700);
         margin-bottom: 0.5625rem;
     }
-
     .statement {
         text-align: center;
         color: var(--text-lighter);
         font-size: var(--font-sz-200);
         margin-bottom: 1.5rem;
     }
-
     .info-grid {
         margin-bottom: 1.5rem;
     }
-
     .container {
         display: flex;
         justify-content: space-between;
@@ -82,34 +77,27 @@ const ResultModal = styled.div`
             max-width: 654px;
             margin: 0 auto;
         }
-
         h2 {
             font-size: var(--font-sz-1200);
             margin-bottom: 1rem;
         }
-
         .statement {
             font-size: var(--font-sz-500);
             margin-bottom: 2.5rem;
         }
-
         .info-grid {
             margin-bottom: 2.5rem;
         }
-
         .container {
             padding: 1.5rem 2rem;
             border-radius: var(--br-S);
         }
-
         .player {
             font-size: var(--font-sz-500);
         }
-
         .pairs {
             font-size: var(--font-sz-900);
         }
-
         .btns-container {
             grid-template-rows: auto;
             grid-template-columns: 1fr 1fr;
@@ -124,7 +112,7 @@ export default function ResultsMenu({players, timeLapsed, moves, handleNewGame, 
     let heading;
     let statement;
     let playerDivs;
-
+    // Single player content values different from multiplayer values
     if (players.length === 1) {
         heading = 'You did it!';
         statement = "Game over! Heres how you got on..."
@@ -141,8 +129,9 @@ export default function ResultsMenu({players, timeLapsed, moves, handleNewGame, 
             </>
         )
     } else {
+        // sort players by number of pairs (decending order)
         const sortedPlayers = players.sort((a, b) => b.pairs - a.pairs);
-    
+        
         function determineGameResult(sortedPlayers) {
             let win = false;
             let currentHighestScore = 0;

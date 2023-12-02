@@ -16,15 +16,17 @@ export default function Main() {
     function handleChangeNumPlayers(num) {
         setNumOfPlayers(num);
     }
-
+    
     function handleChangeGrid() {
         setIsSmallGrid(!isSmallGrid);
     }
 
+    // Toggles between menu component and game component
     function toggleMenuOpen() {
         setMenuOpen(!menuOpen);
     }
 
+    // Completely refreshes game state - causes game unrender and menu to render
     function newGame() {
         setIsNumbers(true);
         setNumOfPlayers(1);

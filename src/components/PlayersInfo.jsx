@@ -8,7 +8,7 @@ const PlayersDiv = styled.div`
     grid-template-columns: ${({$numPlayers}) => `repeat(${$numPlayers}, minmax(50px, 250px))`};       
     grid-gap: 1.5rem;
     
-`
+`;
 
 export default function PlayersInfo({numOfPlayers, players, time, moves}) {
 

@@ -30,7 +30,7 @@ const BoardContainer = styled.div`
     }
 `;
 
-export default function Board({players, isSmallGrid, isNumbers, changePlayerTurn, handleGameOver, toggleRefreshGame}) {
+export default function Board({isSmallGrid, isNumbers, changePlayerTurn, handleGameOver, toggleRefreshGame}) {
     const [board, setBoard] = useState([]);
     const [numOfPairs, setNumOfPairs] = useState(null);
     const [currentPairs, setCurrentPairs] = useState(0);
@@ -38,7 +38,7 @@ export default function Board({players, isSmallGrid, isNumbers, changePlayerTurn
     const [isFirstSelection, setIsFirstSelection] = useState(true);
     const [isOverlayActive, setIsOverlayActive] = useState(false);
 
-    // Run on first mount and then if the player restarts game
+    // Run on first mount and then if the player restarts game (toggleRefreshGame)
     useEffect(() => {
         let numOfObjects = isSmallGrid ? 16 : 36;
         let numberOfPairs = numOfObjects / 2;
@@ -66,6 +66,7 @@ export default function Board({players, isSmallGrid, isNumbers, changePlayerTurn
 
             return arrOfObjs;
         }
+        // refresh state to original board state
         const boardArr = buildBoard();
         setBoard(boardArr);
         setNumOfPairs(numberOfPairs);
@@ -76,18 +77,21 @@ export default function Board({players, isSmallGrid, isNumbers, changePlayerTurn
        
     }, [toggleRefreshGame]);
 
+    // check if game has been won if currentPairs increases
     useEffect(() => {
         if (currentPairs === numOfPairs) {
           handleGameOver();
         }
-    }, [currentPairs, numOfPairs, handleGameOver]);
+    }, [currentPairs, numOfPairs]);
 
-
+    // Onclick event listener for board piece
     function handlePlayerTurn(index) {
+        // changes board state to reflect event in dom
         updatePieceToActive(index);
         
         if (!isFirstSelection) {
             setIsOverlayActive(true);
+            // delay state change so user can see second selection
             setTimeout(() => {
                 setIsFirstSelection(!isFirstSelection);
                 const isSetPair = isPair(firstSelection, {index, piece: board[index]});
@@ -103,6 +107,7 @@ export default function Board({players, isSmallGrid, isNumbers, changePlayerTurn
         
     }
 
+    // checks the value of both players choices, increases pair state variable if pair
     function isPair(selectionOne, selectionTwo) {
         if (selectionOne.piece.value === selectionTwo.piece.value) {
             setCurrentPairs(currentPairs + 1)
@@ -111,6 +116,7 @@ export default function Board({players, isSmallGrid, isNumbers, changePlayerTurn
         return false;
     }
 
+    // changes state of objects selected by user based on whether or not is pair
     // parameters are objects {index: indexNum, piece: {boardPeice}} and boolean (isPair)
     function updateSelections(selectionOne, selectionTwo, isPair) {
         const newBoard = [...board];
@@ -125,16 +131,17 @@ export default function Board({players, isSmallGrid, isNumbers, changePlayerTurn
         }
     }
 
+    // changes board state of selected object - for styling reasons
     function updatePieceToActive(index) {
         const newBoard = [...board];
         newBoard[index].active = true;
         setBoard(newBoard);
     }
 
+    // create array of buttons for board grid
     const boardPieces = board.map((item, index) => {
         return (
             <BoardPiece value={item.value} 
-            // hidden={item.hidden}
             paired={item.paired}
             active={item.active}
             key={item.id}

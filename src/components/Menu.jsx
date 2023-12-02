@@ -1,10 +1,9 @@
-import {useState} from 'react';
 import Button from './Button';
 import MenuContainer from './styles/MenuContainer';
 
-
+// Main game menu to select settings for the game
 export default function Menu({isNumbers, numOfPlayers, isSmallGrid, handleChangeIsNumbers, handleChangeNumPlayers, handleChangeGrid, toggleMenuOpen}) {
-    const isVal = false;
+    
     return (
         <MenuContainer >
             <h1>memory</h1>
