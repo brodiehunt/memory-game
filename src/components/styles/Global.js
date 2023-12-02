@@ -42,8 +42,6 @@ const GlobalStyles = createGlobalStyle`
         font-family: 'Atkinson Hyperlegible', sans-serif;
         font-size: 1rem;
         font-weight: 700;
-        width: 100%;
-        height: 100%;
     }
     button {
         font-family: 'Atkinson Hyperlegible', sans-serif;

@@ -10,7 +10,7 @@ import formatTime from '../utility/formatTime';
 const GameContainer = styled.div`
     padding: 1.5rem;
     margin: 0 auto;
-    height: 100vh;
+    height: 100svh;
     width: 100%;
     max-width: 1110px;
     display: flex; 

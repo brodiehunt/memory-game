@@ -69,10 +69,6 @@ const MenuContainer = styled.div`
             grid-gap: 1.5rem;
         }
     }
-    
-    @media (min-width: 1444px) {
-
-    }
 
 `;
 
