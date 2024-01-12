@@ -1,19 +1,43 @@
 # Frontend Mentor - Memory game solution
 
-This is a solution to the [Memory game challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/memory-game-vse4WFPvM). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
+This is a solution to the [Memory game challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/memory-game-vse4WFPvM). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
+
+## Links
+
+- Solution URL: [github repo](https://github.com/brodiehunt/memory-game)
+- Live Site URL: [Memory game](https://brodiehunt-memory-game.netlify.app/)
 
 ## Table of contents
 
 - [Overview](#overview)
+  - [Installation](#installation)
   - [The challenge](#the-challenge)
   - [Screenshot](#screenshot)
-  - [Links](#links)
 - [My process](#my-process)
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
 
-
 ## Overview
+
+### Installation
+
+1. Clone this repository:
+
+```
+  https://github.com/brodiehunt/memory-game.git
+```
+
+2. Install the dependancies
+
+```
+  npm install
+```
+
+3. Run the application
+
+```
+  npm run dev
+```
 
 ### The challenge
 
@@ -31,45 +55,36 @@ Users should be able to:
 ![In game](./docs/inGame.png)
 ![End Game Menu](./docs/endGameMenu.png)
 
-
-### Links
-
-- Solution URL: [github repo](https://github.com/brodiehunt/memory-game)
-- Live Site URL: [Memory game](https://brodiehunt-memory-game.netlify.app/)
-
 ## My process
 
 ### Built with
+
 - Mobile-first workflow
 - [React](https://reactjs.org/) - JS library
 - [Styled Components](https://styled-components.com/) - For styles
-
 
 ### What I learned
 
 Dynamic styling by passing props to styled components.
 
 ```css
-  background-color: ${({$paired, $active}) => 
+  background-color: ${({$paired, $active}) =>
     $paired  ? ('var(--idle-col)') : (
         $active ? 'var(--primary-col)' : 'var(--active-col)'
     )};
 ```
 
 Implementing the use effect hook. Here, the useEffect hook is used to implement the timer functionality during the memory game.
+
 ```js
 useEffect(() => {
-        let interval;
-        if (!menuOpen && !gameOver) {
-            interval = setInterval(() => {
-                setTimeLapsed(prevTime => prevTime + 1);
-            }, 1000);
-        }
+  let interval;
+  if (!menuOpen && !gameOver) {
+    interval = setInterval(() => {
+      setTimeLapsed((prevTime) => prevTime + 1);
+    }, 1000);
+  }
 
-        return () => clearInterval(interval);
-    }, [menuOpen, gameOver])
+  return () => clearInterval(interval);
+}, [menuOpen, gameOver]);
 ```
-
-
-
-
